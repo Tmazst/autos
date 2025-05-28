@@ -18,6 +18,7 @@ from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
 import pyodbc
 import sqlite3
 import itsdangerous
+import time
 
 
 #Change App
@@ -33,7 +34,7 @@ if os.environ.get('EMAIL_INFO') == 'info@techxolutions.com':
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///car_bids_db.db"
 else:#Online
     app.config[
-    "SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://techtlnf_tmaz:!Tmazst41#@localhost/techtlnf_grace_auto_db"
+    "SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://techtlnf_tmaz:!Tmazst41#@localhost/techtlnf_grace_auto_db" 
 
 application = app
 
@@ -209,8 +210,6 @@ def process_profile(file):
                 return f"Allowed are [ .png, .jpg, .jpeg, .gif] only"
 
 
-
-
 def car_images(images_uploads):
 
     uploaded_files = images_uploads
@@ -251,6 +250,10 @@ def inject_ser():
 
 @app.route("/", methods=['POST','GET'])
 def home():
+
+    with app.app_context():
+        db.create_all()
+    
 
     title = "Car Bids"
 
