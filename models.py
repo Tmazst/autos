@@ -190,7 +190,7 @@ class User_Subscription_Records(db.Model,UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey('car_server_details.id'))
-    subscription_option = db.Column(db.String)
+    subscription_option = db.Column(db.String(120))
     subscription = db.Column(db.Float)
     subscription_date = db.Column(db.Float)
     paid_balance = db.Column(db.Float)
