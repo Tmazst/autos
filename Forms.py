@@ -128,7 +128,7 @@ class Car_Details_Form(FlaskForm):
                                            ("Deposit + 1 Months", "Deposit + 1 Months"),("6 Months", "6 Months"),("12 Months", "12 Months")
                                            ,("24 Months", "24 Months"),("3 Years", "3 Years"),("5 Years", "5 Years")])
     car_feature1 = StringField('Car Feature')
-    car_feature2 = StringField('Car Feature')
+    car_feature2 = StringField('Body Type')
     car_feature3 = StringField('Car Feature')
     car_feature4 = StringField('Fuel Type')
     negotiation_level = SelectField('Negotiation Level',
