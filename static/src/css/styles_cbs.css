@@ -94,6 +94,9 @@ body{font-family: 'Montserrat' !important;background-color: rgba(142, 195, 211,0
     border-radius: 15px;
     box-shadow: 0 0 3px 1px rgba(28, 46, 51, 0.15);
     padding: 10px;
+    position: sticky;
+    top:0;
+    z-index: 1000;
 }
 
 .icons{
@@ -188,6 +191,7 @@ a {
     flex: 0 0 auto;
     scroll-snap-align: start;
 }
+
 .gallery-arrow {
     display: none;
     position: absolute;
@@ -340,7 +344,8 @@ a{
 .unavailabile{border-radius:5px;padding:5px 10px;background-color: rgb(124, 109, 103);color:antiquewhite;font-weight: 600;}
 
 .imgs-cont{
-    display:flex;overflow:hidden !important;gap:15px;padding:10px;
+    display:flex;gap:15px;padding:10px;
+    -webkit-overflow-scrolling: touch;
     }
 
 .imgs-cont-search{
