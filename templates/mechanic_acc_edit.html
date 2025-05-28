@@ -1,0 +1,162 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+<section id="" class="services hidden">
+    <div class="form-container">
+        <div class="space-filler"></div>
+    <div><small style="border:none" class="sub-topic-details" >Sign Up Form</small><br>
+    <small>A fast and convient plartform in Eswatini to sell and manage & track your car sales records</small>
+    </div>
+    <div class="line"></div><br>
+
+    <div style="" class="img-cont">    
+        <div width="90%"><img class="prf-image" src="static/images/{{mechanic_user.image}}" alt=""/></div>
+    </div class="flex-center">
+
+    <div>{{mechanic_user.name}}</div>
+    <div>{{mechanic_user.email}}</div>
+
+    <form style="background-color: f8db5a;width:;"  _lpchecked="1" action="" method="post" enctype="multipart/form-data">
+        <div><small style="border:none" class="form-groups-subs">Personal Details</small></div><br>
+        
+        <!-------name--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ register.hidden_tag() }}
+            {{ register.name.label(class="labels")}}<br>
+            {{ register.name(class="form-control adj-width-60",placeholder="name",value=mechanic_user.name)}}
+            {% for error in register.name.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+        </div>
+
+
+        <!-------contacts--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ register.contacts.label(class="labels")}}<br>
+            {% if mechanic_user.contacts %}
+                {{ register.contacts(class="form-control adj-width-60",placeholder="e.g. (+268) 7645 0000",value=mechanic_user.contacts)}}<br>
+            {%else%}
+                {{ register.contacts(class="form-control adj-width-60",placeholder="e.g. (+268) 7645 0000")}}<br>
+            {%endif%}
+            {% if register.contacts.errors %}
+            {% for error in register.contacts.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+
+        <!-------specialty--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ register.specialty.label(class="labels")}}<br>
+            {% if mechanic_user.specialty %}
+                {{ register.specialty(class="form-control adj-width-60",placeholder="e.g. (+268) 7645 0000",value=mechanic_user.specialty)}}<br>
+            {%else%}
+                {{ register.specialty(class="form-control adj-width-60",placeholder="e.g. Gearbox Specialist or Madza Specialist")}}<br>
+            {%endif%}
+            {% if register.specialty.errors %}
+            {% for error in register.specialty.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------more_info--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ register.more_info.label(class="labels")}}<br>
+            {% if mechanic_user.more_info %}
+                <textarea class="form-control adj-width-60" name="more_info">{{mechanic_user.more_info}}</textarea><br>
+            {%else%}
+                {{ register.more_info(class="form-control adj-width-60",placeholder="e.g. ")}}<br>
+            {%endif%}
+            {% if register.more_info.errors %}
+            {% for error in register.more_info.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------address--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ register.address.label(class="labels")}}<br>
+            {% if mechanic_user.address %}
+                {{ register.address(class="form-control adj-width-60",placeholder="e.g. (+268) 7645 0000",value=mechanic_user.address)}}<br>
+            {%else%}
+                {{ register.address(class="form-control adj-width-60",placeholder="e.g. (+268) 7645 0000")}}<br>
+            {%endif%}
+            {% if register.address.errors %}
+            {% for error in register.address.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+
+
+        <!-------whatsapp--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ register.whatsapp.label(class="labels")}}
+            {% if mechanic_user.whatsapp %}
+                {{ register.whatsapp(class="form-control adj-width-60",placeholder="e.g. (+268) 7645 0000",value=mechanic_user.whatsapp)}}<br>
+            {%else%}
+                {{ register.whatsapp(class="form-control adj-width-60",placeholder="e.g. (+268) 7645 0000")}}<br>
+            {%endif%}
+            
+            {% if register.whatsapp.errors %}
+            {% for error in register.whatsapp.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------personal_id_no--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ register.personal_id_no.label(class="labels")}}<br>
+            {% if mechanic_user.personal_id_no %}
+                {{ register.personal_id_no(class="form-control adj-width-60",placeholder="e.g. (+268) 7645 0000",value=mechanic_user.personal_id_no)}}<br>
+            {%else%}
+                {{ register.personal_id_no(class="form-control adj-width-60",placeholder="e.g. 2409026100169")}}<br>
+            {%endif%}
+            {% if register.personal_id_no.errors %}
+            {% for error in register.personal_id_no.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------WORK DURATION--------->
+    <!-- <div style="display:flex"> -->
+        <div class="job-ad-group marginise-bottom">
+
+            {{ register.facebook.label(class="labels")}}
+            {% if mechanic_user.facebook  %}
+                {{ register.facebook(class="form-control adj-width-60",placeholder="e.g https://www.facebook.com",value=mechanic_user.facebook)}}<br>
+            {%else%}
+                {{ register.facebook(class="form-control adj-width-60",placeholder="e.g https://www.facebook.com")}}<br>
+            {%endif%}
+            
+            {% if register.facebook.errors %}
+            {% for error in register.facebook.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <!-- <p style="margin:0 5px;">   </p> -->
+     
+        <div class="job-ad-group marginise-bottom">
+            {{ register.image_pfl.label(class="labels")}}
+            {{ register.image_pfl(class="form-control adj-width-60")}}
+        </div>
+    <!-- </div> -->
+
+        <div>
+            {{ register.Update(class="btns", value="Update") }}
+            <!--<input class="btns" type="submit" value="Create Account" />-->
+    </div>
+
+    </form>
+</div>
+</section><div class="space-filler"></div><br><br>
+
+{% endblock %}

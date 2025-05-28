@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    :root{--main-pcolor:#25109e;--second-color:#363c74;}
+    .form-fields{display:flex;flex-direction:column;}
+    .sub-topics{margin: 0 auto;height:80px;width:60%;}
+    .price-tag{font-size:30px;font-weight: 600;color: rgb(116, 101, 96)}
+    .search-cont{background-color:;display: flex;justify-content:center;padding:10px}
+    .search-cont input{border: 1px solid grey;border-radius:10px;padding: 5px;}
+    .availability{border-radius:5px;padding:5px 10px;background-color: coral;color:antiquewhite;font-weight: 600;}
+    .location{font-size:20px !important}
+    .sub-topics h1,small,p{text-align: center}
+    .sel-info-cont{display: flex;justify-content: center;align-items: center;}
+    .sel-info-cont p{text-wrap: nowrap}
+    .view-button{background-color:#25109e }
+    .view-button:hover{background:none;border:2px solid #25109e;color: }
+    .agent-btn:hover{background-color: #25109e;}
+    .agent-btn{background:none;border:2px solid #25109e;color:#25109e}
+    /* section{ background-image:url(static/images/bg_service.png) } */
+</style>
+
+<div style="width:;margin:0 auto;background-color:;">
+    <!-- <a id="contact_us"></a> -->
+    <section style="background-color:;" id="" class="services hidden">
+        <!-- Flash message -->
+
+        <div class="flash-messages ">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for  category, message in messages %}
+                        <div class="flash-messages alert-{{category}}"> {{message}}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div><br>
+
+        <div style="height:180px " class="main-img-cont">
+            <img id="" style="height:inherit" class="main-img" src="static/images/spares-img.png"  />
+        </div>
+
+        <!-- <div class="sub-topics"><p></p></div> -->
+        <!-- <div class="search-cont"><a href="/search?search_value=value"><input type="search" placeholder="search" value=""></a></div><br> -->
+
+        <div class="search-cont">
+            <form action="/search" method="get">
+              <input type="search" name="search_value" placeholder="Search" value="">
+              <button type="submit">Search</button>
+            </form>
+        </div><br>
+
+        <!-- Main  -->
+         {% for spare_advert in spares %}
+         <!-- <div style="margin:0 auto;width:80%" class="btns"></div><br> -->
+         {% if spare_advert.main_img and sys.path.exists(sys.path.join("static/images/", spare_advert.main_img)) %}
+         <div style="display:flex;justify-content:center;width:100%;background-color:;"><small class="app-title">CAR BIDS SPARES</small></div><br><br>
+
+            <div class="" style="background-color:;margin-bottom: 10px;">
+                
+                <h1 style="margin: 0 auto;text-align:center;color:#25109e">{{spare_advert.item_name}}<br></h1>
+                <h3 style="margin: 0 auto;text-align:center;color:#363c74">{{spare_advert.item_name}}</h3><br>
+                <!-- <small><span style="font-size:smaller">Enjoy this new selection of fresh</span></small> -->
+                <!-- <img class="update-icons" scr="static/icons/updates-whatsapp-icon.png" /> -->
+                <div class="sel-info-cont">
+                    <!-- Agent Profile Pic  -->
+                    <!-- <a id="" class="text-decor sel-info-cont" href="#" onclick="agentContacts(event)"> -->
+                        <div style="height:40px;width:40px" class="img-cont flex-center">
+                            <div id="images"  width="90%" ><img class="prf-image" src="static/images/{{agent_user.query.get(spare_advert.user_id).image}}" alt=""/></div>
+                        </div>
+                        <div style="background-color: ;padding-left:10px" width="">
+
+                                <input class="agent-btn" onclick="popUp('{{spare_advert.user_id}}')" type="button"  class="agent_name" name="{{agent_user.query.get(spare_advert.user_id).name}}" 
+                                   style="" value="{{agent_user.query.get(spare_advert.user_id).name}}"/><br>
+                
+                            <!--  POP UP - CONTACTS  -->
+                            <div id="popup_{{spare_advert.user_id}}" class="pop-up">
+
+                                <div style="" id="pop-cont_{{spare_advert.user_id}}" class="pop-cont">
+
+                                    <form name="Logo Quote Request" method="post">
+                                        <h1 style="margin:0 auto">Contact Seller</h1>
+                                        <div><hr></div>
+                                            <div style="background-color:;" class="bool-opt-cont">
+                                                <div  ><p></p></div>
+                                                <div class="update-icons-lnks"><img class="update-icons" src="static/icons/updates-call-icon.png" /><a class="contact-lnks" id="cell-no" href="tel:{{agent_user.query.get(spare_advert.user_id).contacts}}">{{agent_user.query.get(spare_advert.user_id).contacts}}</a></div>
+                                                {% if agent_user.query.get(spare_advert.user_id).whatsapp %}
+                                                <div class="update-icons-lnks"><img class="update-icons" src="static/icons/whatsapp-icon.png" /><a class="contact-lnks" id="cell-wa" href="https://wa.me/{{agent_user.query.get(spare_advert.user_id).whatsapp}}">{{agent_user.query.get(spare_advert.user_id).whatsapp}}</a></div>
+                                                {% endif %}
+                                                {% if agent_user.query.get(spare_advert.user_id).facebook %}
+                                                <div class="update-icons-lnks"><img class="update-icons" src="static/icons/updates-fb-icon.png" /><a class="contact-lnks" id="cell-fb" href="{{agent_user.query.get(spare_advert.user_id).facebook}}">{{agent_user.query.get(spare_advert.user_id).facebook}}</a></div>
+                                                {% endif %}
+                                                <div class="update-icons-lnks"><img class="update-icons" src="static/icons/updates-email-icon.png" /><a class="contact-lnks" id="cell-em" href="mailto:{{agent_user.query.get(spare_advert.user_id).email}}">{{agent_user.query.get(spare_advert.user_id).email}}</a></div>
+                                            </div><br><br>
+                                    </form>
+                                    <div style="flex-grow:1"></div>
+                                    <div style="align-self:flex-end"><input onclick="closePopup('{{spare_advert.user_id}}')" type="button" value="Exit"></div>
+                                </div>
+
+                            </div>
+                            
+                        </div>
+                    </a>
+                </div>
+
+            </div><br><br>
+            <!-- MAIN IMAGE  -->
+            <div class="main-img-cont">
+                <img onclick="imgViewer(event)" id="image{{ spare_advert.user_id }}" class="main-img" src="static/images/{{spare_advert.main_img}}" alt=""/>
+                <a class="view-button" href="/spare_details_view?sid={{ser.dumps({'data':spare_advert.id})}}">View</a>
+            </div>
+
+            <div id="location-border" style="" class="sel-info-cont">
+                <div style="background-color: ;font-size:12px" width="0%"><p>{% if spare_advert.availability %}<span style="font-size:12px" class="location">{{agent_user.query.get(spare_advert).address}}</span>  <span style="font-size:14px" class="availability">
+                    Available</span>{% else %}<span style="font-size:14px" class="unavailabile">Sold: {{agent_user.query.get(spare_advert.user_id).address}}</span>{% endif %}</p></div>
+            </div>
+
+            <div class="sel-info-cont">
+                <input type="text" style="display: none" class="price" value="{{spare_advert.sale_price}}" />
+                <p id="currency" class="price-tag" >E{{spare_advert.item_price}}0</p>
+                <!-- <div style="background-color:;" width="0%" class="counter" class="price-tag">0</div> -->
+                <!-- <div  style="font-size: 2em;">0</div>  -->
+            </div>
+
+            <div style="overflow:auto !important;width:90%" class="imgs-cont">
+            </div><div class="space-filler"></div>
+            {% endif %}
+        {% endfor %}
+    </section>
+    
+</div>
+
+<div id="image-viewer">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="full-image">
+</div>
+
+<div class="space-filler"></div>
+
+{% if not current_user.whatsapp %}
+    <div class="whatsapp-icon">
+        <a href="https://wa.me/{{current_user.whatsapp}}"><img style="height:40px;" class="car-image" src="static/icons/whatsapp-icon.png"></a>
+    </div>
+{% endif %}
+
+<script>
+
+function displayImage(carId, image) {
+    let mainImg = document.querySelector("#image" + carId);
+    mainImg.src = "static/uploads/" + image;
+}
+
+// Counter 
+
+let counts; // Declare counts variable
+let actual = document.querySelectorAll(".price");
+let initial = 100;
+let upto = 1500;
+
+
+function startCounting() {
+    // Start the counter
+    counts = setInterval(updated, 0.1); // Adjusting interval for smooth effect
+}
+
+function updated() {
+    // let count = document.getElementById("counter");
+    const counterElements = document.querySelectorAll(".counter");
+    // let currency = document.querySelector("#currency");
+    counterElements.forEach(each => {
+        // count.innerHTML = ++bogus;
+        const car_price = actual.value;
+        let bogus = actual.value - 1000;
+        
+        each.innerHTML = ++bogus;
+            if (bogus >= 106000) {
+                // currency.classList.add('bulge-animate');
+                each.classList.add('bulge-animate');
+                
+                clearInterval(counts);
+                // actual.innerHTML = actual.value;
+            }
+    });
+}
+
+function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+window.addEventListener('scroll', function() {
+    // const counterElement = document.getElementById("counter");
+    const counterElements = document.querySelectorAll(".counter");
+    counterElements.forEach(each => {
+        // if (isElementInViewport(counterElement) && !counts) {
+        if (isElementInViewport(each) && !counts) {
+            startCounting(); // Start counting if in viewport
+        }
+    });
+});
+
+
+</script>
+{% endblock %}

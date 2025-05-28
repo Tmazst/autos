@@ -1,0 +1,123 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+
+<div style="width:;margin:0 auto">
+    <section id="" class="services hidden">
+
+        <!-- Flash message -->
+        <div class="sub-topics"><p></p></div>
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for  category, message in messages %}
+                        <div class="flash-messages alert-{{category}}"> {{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div><br>
+
+        <!-- Main  -->
+        <div class="sub-topics" style="background-color: ;margin-bottom: 10px;">
+            <h1 style="margin: 0 auto;text-align:center;color:#502525">{{car_details_query.car_make}}<br></h1>
+            <h3 style="margin: 0 auto;text-align:center;color:#534141">{{car_details_query.car_model}}</h3>
+            <!-- <small><span style="font-size:smaller">Enjoy this new selection of fresh</span></small> -->
+        </div>
+        <div class="main-img-cont">
+            <div width="90%"><img class="main-img" src="static/uploads/{{images.query.filter_by(token=car_details_query.token).first().img_1}}" alt=""/></div>
+        </div><br><br>
+        <div class="car_details_cont">
+            <div><p class="sub-topic-details" >Vehicle Details</p>
+                <!-- <div class="line"></div> -->
+            </div>
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Date Posted:</span>   <span class="detail-value"> {{car_details_query.other1}}</span></p></div>
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Usage:</span>   <span class="detail-value"> {{car_details_query.other2}}</span></p></div>
+            {% if car_details_query.car_defects %}
+                <div class="detail" style="align-items: center"><p><span class="details-keys">Faults:</span>   <span class="detail-value">{{car_details_query.car_defects}}</span></p></div>
+            {% else %}
+                <div class="detail" style="align-items: center"><p><span class="details-keys">Faults:</span>   <span class="detail-value">-</span></p></div>
+            {% endif %}
+            {% if car_details_query.availability %}
+                <div class="detail" style="background-color:;"><p><span class="details-keys">Availability Status:</span>   <span class="detail-value"> Available</span></p></div>
+            {% else %}
+                <div class="detail" style="background-color:;"><p><span class="details-keys">Availability Status:</span>   <span class="detail-value"> Sold: {{car_details_query.date_sold}} </span></p></div>
+            {% endif %}
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Location:</span>   <span class="detail-value">{{car_details_query.other2}}</span></p></div>
+        </div><br>
+        <div class="car_details_cont">
+            <div><p class="sub-topic-details" >Seller Details</p>
+                <!-- <div class="line"></div> -->
+            </div>
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Name:</span>   <span class="detail-value"> {{usr.query.get(car_details_query.user_id).name}}</span></p></div>
+            <a href="tel:{{usr.query.get(car_details_query.user_id).contacts}}"><div class="detail" style="background-color:;"><p><span class="details-keys">Contact Details:</span>   <span class="detail-value"> {{usr.query.get(car_details_query.user_id).contacts}}</span></p></div></a>
+            {% if usr.query.get(car_details_query.user_id).whatsapp %}
+                <a href="wa.me:{{usr.query.get(car_details_query.user_id).whatsapp}}"><div class="detail" style="background-color:;"><p><span class="details-keys">Whatsapp:</span>   <span class="detail-value"> {{usr.query.get(car_details_query.user_id).whatsapp}}</span></p></div></a>
+            {% endif %}
+            {% if usr.query.get(car_details_query.user_id).facebook %}
+                <a href="{{usr.query.get(car_details_query.user_id).facebook}}"> <div class="detail" style="background-color:;"><p><span class="details-keys">Facebook:</span>   <span class="detail-value"> {{usr.query.get(car_details_query.user_id).facebook}}</span></p></div></a>
+            {% endif %}
+            {% if car_user.query.get(car_details_query.user_id).address %}
+                <div class="detail" style="background-color:;"><p><span class="details-keys">Location:</span>   <span class="detail-value"> {{car_user.query.get(car_details_query.user_id).address}}</span></p></div>
+            {% endif %}
+        </div>
+        <br>
+        
+        <div class="car_details_cont">
+            <div><p class="sub-topic-details" >Payment Details</p>
+                <!-- <div class="line"></div> -->
+            </div>
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Price: </span>   <span class="detail-value"> E{{car_details_query.sale_price}}</span></p></div>
+            <div class="detail"  style="background-color:;"><p><span class="details-keys">Payment Terms: </span>   <span class="detail-value"> {{car_details_query.payment_terms}}</span></p></div>
+            <div class="detail"  style="background-color:;"><p><span class="details-keys">Neg. Level: </span>   <span class="detail-value"> {{car_details_query.negotiation_level}}</span></p></div>
+        </div>
+        <br>
+
+        <div><h2 style="color:#555">See Related:</h2></div>
+        <div style="" class="imgs-cont">
+            {% for car in related_cars %}
+                <!-- We exclude the current adverts, and check if img_1 is not none(database) and check if path file name exists in server  -->
+                {% if car.token != car_details_query.token and images.query.filter_by(token=car.token).first().img_1 and
+                     sys.path.exists(sys.path.join("static/uploads/",images.query.filter_by(token=car.token).first().img_1)) %}
+                <div style="justify-content:flex-start" class="thumb-cont imgs-chd-cont"> 
+                    <div style="display: flex;flex-direction:column;justify-content:center;width:150px;height:150px">
+                        <a href="/car_view_details?id={{ser.dumps({'data':car.id})}}"><img style="height:150px !important" class="car-image" src="static/uploads/{{images.query.filter_by(token=car.token).first().img_1}}"/></a>
+                        <p><span> {{car.car_make}} - {{car.car_model}} </span></p><br>
+                        {% if car.availability %}
+                            <p><span> Available</span></p>
+                        {% else %}
+                            <small><span> Sold: {{car.date_sold}}</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <h1 style="color:#999">Car Images:</h1>
+
+        <div class="images-collage">
+            {% for car_img in images.query.filter_by(token=car_details_query.token).all() %}
+                {% if car_img.img_2 and sys.path.exists(sys.path.join("static/uploads/",car_img.img_2)) %}
+                    <img id="" style="max-width:300px;" class="del-icon" src="static/uploads/{{car_img.img_2}}"  />
+                {% endif %}
+                {% if car_img.img_3 %}
+                {% if sys.path.exists(sys.path.join("static/uploads/",car_img.img_3)) %}
+                    <img id="" style="max-width:300px;" class="del-icon" src="static/uploads/{{car_img.img_3}}"  />
+                {% endif %}{% endif %}
+                    {% if car_img.img_4 and car_img.img_4 and sys.path.exists(sys.path.join("static/uploads/",car_img.img_)) %}
+                        <img id="" style="max-width:300px;" class="del-icon" src="static/uploads/{{car_img.img_4}}"  />
+                    {% endif %}
+                {% if car_img.img_5 and car_img.img_5 and sys.path.exists(sys.path.join("static/uploads/",car_img.img_)) %}
+                    <img id="" style="max-width:300px;" class="del-icon" src="static/uploads/{{car_img.img_5}}"  />
+                {% endif %}
+                {% if car_img.img_6 and car_img.img_6 and sys.path.exists(sys.path.join("static/uploads/",car_img.img_)) %}
+                    <img id="" style="max-width:300px;" class="del-icon" src="static/uploads/{{car_img.img_6}}"  />
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </section><div class="space-filler"></div><div class="space-filler">
+</div>
+
+{% endblock %}

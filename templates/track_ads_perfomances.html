@@ -1,0 +1,118 @@
+
+{% extends "base.html" %}
+{% block content %}
+<style>
+    section{margin-bottom:;}
+</style>
+
+
+<div style="width:;margin:0 auto">
+    <section id="" class="services hidden">
+
+        <!-- Flash message -->
+        <div class="sub-topics"><p></p></div>
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for  category, message in messages %}
+                        <div class="flash-messages alert-{{category}}"> {{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div style="margin:0 auto;background-color:;width:200px !important" class="center-prl-img">
+            <div style="margin-left:;"  class="img-cont">
+                    <img class="prf-image" src="static/images/{{current_user.image}}" />
+            </div>
+            <h4 style="font-size:22px;margin-left:;margin-bottom:0;text-align:center;color:#504f4f"> {{current_user.name}}<br> <span class="spans" style="font-size:16px">{{current_user.email}}</span></h4>
+        </div><br><br>
+
+        <div><p class="sub-topic-details" >Manage Ads</p>
+            <div class="flex-center"><small class="sub-title"><span>{{no_of_ads}} Ads Posted</span></small></div>
+            <!-- <div class="line"></div> -->
+        </div><br>
+
+        <!-- Main -->
+        {% for car_ads in agent_car_ads  %}
+        <h2 class="numburing">{{loop.index}}</h2>
+        <div class="sub-topics" style="background-color:;margin-bottom: 10px;">
+            <h3 style="margin: 0 auto;text-align:center;color:#502525">{{car_ads.car_make}}<br></h3>
+            <h5 style="margin: 0 auto;text-align:center;color:#534141">{{car_ads.car_model}}</h5>
+            <!-- <small><span style="font-size:smaller">Enjoy this new selection of fresh</span></small> -->
+        </div>
+        
+        <!--  -->
+        
+            <div class="main-img-cont">
+                <img id="image-manage" class="main-img" src="static/uploads/{{images_cls.query.filter_by(car_details_id=car_ads.id).first().image_url}}"  />
+            </div><br>
+            </div style="background-color:" class="flex-center">
+                <div class="flex-center"><small class="sub-title"> {% if car_ads.availability %} <span>{{car_ads.other1}}</span>  
+                     <span style="color:coral">Available</span> {% else %} <span>Sold: {{car_ads.date_sold}}</span> {% endif %} </small></div><br> 
+                <div class="icons-cont  flex-center">
+                    <input onclick="updatesPopup('{{loop.index}}')" style="height:30px" id="updates-btn-{{loop.index}}" class="btns" type="button" value="Updates">
+                    <a href="/car_ad_form_edit?id={{ser.dumps({'data':car_ads.id})}}"><input id="manage-btn" class="btns" type="button" value="Edit"/></a>
+                    <form  _lpchecked="1" action="" method="post">
+                        <input style="display:none;" type="text" name="ad_id" value={{car_ads.id}} />
+                        {% if car_ads.availability %}
+                            <input id="availability-btn" style="height:30px" class="btns" type="submit" value="Sold ?">
+                        {% else %}
+                            <input id="availability-btn-inv" style="height:30px" class="btns" type="submit" value="Available ?">
+                        {% endif %}
+                    </form>
+                    <a href="/delete_entry?del={{ser.dumps({'data':car_ads.id})}}"><img id="" style="height:35px;position:;" class="del-icon" src="static/icons/delete-icon.png"  /></a>
+                </div>
+            </div><div class="space-filler"></div>
+
+            <div id="updates-popup-{{loop.index}}" class="pop-up">
+
+                <div style="position:;" id="updates-cont-{{loop.index}}" class="pop-cont">
+                    <form name="Vehicle Updates" method="post">
+                        <h1 style="margin:0 auto;color:#502525">Updates</h1>
+                        <div><hr></div>
+                        <small class="bold">Track Your Ads Perfomances;</small>
+                       <p></p>
+        
+                            <div class="car_details_cont">
+                                    <!-- <div class="line"></div>  -->
+                                <div style=""><p><span class="updates-keys">Date Posted:</span> <span class="detail-value">{{car_ads.other1}}</span> </p></div>
+                                <div style="background-color:;"><p><span class="updates-keys">Interests:</span>   <span style="color:#504f4f" class="detail-value"> Coming Soon!!</span></p></div>
+                                <div style="background-color:;"><p><span class="updates-keys">Bookings for Viewing:</span>   <span style="color:#504f4f" class="detail-value"> Coming Soon!!
+                                </span></p></div>
+                                <div style="background-color:;"><p><span class="updates-keys">Wishes:</span>   <span class="detail-value" style="color:#504f4f"> Coming Soon!!</span></p></div>
+                                <div style="background-color:;"><p><span class="updates-keys">Engagements:</span>   <span class="detail-value"> Coming Soon!!</span></p></div>
+                                <div style="background-color:;"><p><span class="updates-keys">Status:</span>   <span class="detail-value"> Coming Soon!!</span></p></div>
+                            </div><br>
+                            <div style="flex-grow:1"></div>
+                            
+                            <!-- <div>
+                                <input class="form-control" type="text" name="Name" placeholder="Name" />
+                                <input class="form-control" type="email" name="Email" placeholder="Email"/>
+                                <input class="form-control" type="tel" name="Phone No."  placeholder="Phone Number"/>
+                                <input class="form-control" type="submit" value="Submit"/>
+                            </div> -->
+                    <div style="z-index: 500;position: absolute;bottom: 60px;right:50px"><input onclick="closeUpdatesPop('{{loop.index}}')" class="btns" type="button" value="Exit"></div>
+                    </form>
+                </div>
+
+            </div>
+        {% endfor %}
+
+        <!-- <div class="popup">
+            <div class="car_details_cont">
+                <div><p class="sub-topic-details" >Updates</p>
+                     <div class="line"></div> 
+                </div>
+                <div style="background-color:;"><p><span class="details-keys">Date Posted:</span>   <span class="detail-value"> 25 Oct 24</span></p></div>
+                <div style="background-color:;"><p><span class="details-keys">Interests:</span>   <span class="detail-value"> 25</span></p></div>
+                <div style="background-color:;"><p><span class="details-keys">Wishes:</span>   <span class="detail-value"> 6</span></p></div>
+                <div style="background-color:;"><p><span class="details-keys">Engagements:</span>   <span class="detail-value"> 13 contacted</span></p></div>
+            </div><br>
+        </div> -->
+
+
+    </section><br><br><div class="space-filler"></div>
+</div>
+
+{% endblock %}

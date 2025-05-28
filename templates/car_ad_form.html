@@ -1,0 +1,236 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+<section id="" class="services hidden">
+    <div class="form-container">
+    <div><small style="border:none" class="sub-topic-details" >Car Advert Form</small><br>
+    <small>A fast and convient plartform in Eswatini to sell and manage your car sales records</small>
+    </div>
+    <div class="line"></div><br>
+
+    
+    <form style="background-color: f8db5a;width:;"  _lpchecked="1" action="" method="post"  enctype="multipart/form-data">
+        <div><small style="border:none" class="form-groups-subs" >Vehicle Details</small></div><br>
+        
+        <!-------Post By--------->
+        <div class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.car_images.label(class="labels")}}<br>
+            {{ car_ad_form.car_images(class="form-control adj-width-60")}}
+            {% for error in car_ad_form.car_images.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+
+        </div>
+
+        <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+            {{car_ad_form.hidden_tag()}}
+
+            {{ car_ad_form.car_make.label(class="labels")}}
+            {{ car_ad_form.car_make(class="form-control adj-width-60", placeholder="Mazda 3")}}
+            {% if car_ad_form.car_make.errors %}
+            {% for error in car_ad_form.car_make.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.car_model.label(class="labels")}}
+            {{ car_ad_form.car_model(class="form-control adj-width-60", placeholder="Axela sp3")}}
+            {% if car_ad_form.car_model.errors %}
+            {% for error in car_ad_form.car_model.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.vehicle_id_number.label(class="labels")}}
+            {{ car_ad_form.vehicle_id_number(class="form-control adj-width-60", placeholder="FSD 000 ZS")}}
+            {% if car_ad_form.vehicle_id_number.errors %}
+            {% for error in car_ad_form.vehicle_id_number.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.location.label(class="labels")}}
+            {{ car_ad_form.location(class="form-control adj-width-60", placeholder="e.g. Lubuli")}}
+            {% if car_ad_form.location.errors %}
+            {% for error in car_ad_form.location.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+
+
+    <!-------JOB DESCRIPTION--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.car_color.label(class="labels")}}<br>
+            {{ car_ad_form.car_color(class="form-control adj-width-60",placeholder="Black")}}
+            {% if car_ad_form.car_color.errors %}
+            {% for error in car_ad_form.car_color.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+    <!-------Fuel Type--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.car_feature4.label(class="labels")}}
+            {{ car_ad_form.car_feature4(class="form-control adj-width-60",placeholder="e.g. Petrol")}}
+           
+            {% if car_ad_form.car_feature4.errors %}
+            {% for error in car_ad_form.car_feature4.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Body Type--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.car_feature2.label(class="labels")}}
+            {{ car_ad_form.car_feature2(class="form-control adj-width-60",placeholder="e.g. Petrol")}}
+           
+            {% if car_ad_form.car_feature2.errors %}
+            {% for error in car_ad_form.car_feature2.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------WORK DURATION--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.car_defects.label(class="labels")}}
+            {{ car_ad_form.car_defects(class="form-control adj-width-60",placeholder="e.g Needs Service, Front Bumper Cracked")}}
+            {% if car_ad_form.car_defects.errors %}
+            {% for error in car_ad_form.car_defects.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <!-- <p style="margin:0 5px;">   </p> -->
+
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.mileage.label(class="labels")}}
+            {{ car_ad_form.mileage(class="form-control adj-width-60",placeholder="e.g 125 420km")}}
+            {% if car_ad_form.mileage.errors %}
+            {% for error in car_ad_form.mileage.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+    <!-- </div> -->
+
+
+
+    <div><small style="border:none" class="form-groups-subs" >Payments</small></div><br>
+
+        <!-------BENEFITS--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.sale_price.label(class="labels")}}
+
+            {{ car_ad_form.sale_price(class="form-control adj-width-60",placeholder="e.g. E70 000")}}
+            {% if car_ad_form.sale_price.errors %}
+            {% for error in car_ad_form.sale_price.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+
+        <!-------Application Deadline--------->
+        <div class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.payment_terms.label(class="labels")}}<br>
+            {{ car_ad_form.payment_terms(class="form-control adj-width-60")}}
+            {% if car_ad_form.payment_terms.errors %}
+            {% for error in car_ad_form.payment_terms.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Post By--------->
+        <div class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.negotiation_level.label(class="labels")}}<br>
+            {{ car_ad_form.negotiation_level(class="form-control adj-width-60")}}
+            {% if car_ad_form.negotiation_level.errors %}
+            {% for error in car_ad_form.negotiation_level.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div><small style="border:none" class="form-groups-subs" >Legal Status</small></div><br>
+        <!-------Post By--------->
+        <div class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.registration_docs_status.label(class="labels")}}<br>
+            {{ car_ad_form.registration_docs_status(class="form-control adj-width-60")}}
+            {% if car_ad_form.registration_docs_status.errors %}
+            {% for error in car_ad_form.registration_docs_status.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        
+
+        <!-------Post By--------->
+        <div class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.registration_docs_due.label(class="labels")}}<br>
+            {{ car_ad_form.registration_docs_due(class="form-control adj-width-60",placeholder="E250.00 due")}}
+            {% if car_ad_form.registration_docs_due.errors %}
+            {% for error in car_ad_form.registration_docs_due.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div><small style="border:none" class="form-groups-subs" >Usage</small></div><br>
+
+           <!-------Usage--------->
+           <div class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.usage.label(class="labels")}}<br>
+            {{ car_ad_form.usage(class="form-control adj-width-60",placeholder="How long have you used the car")}}
+            {% if car_ad_form.usage.errors %}
+            {% for error in car_ad_form.usage.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div><small style="border:none" class="form-groups-subs" >Comments</small></div><br>
+
+        <!-------Post By--------->
+        <div class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.additional_comments.label(class="labels")}}<br>
+            {{ car_ad_form.additional_comments(class="form-control adj-width-60",placeholder="Your Comments about the car")}}
+            {% if car_ad_form.additional_comments.errors %}
+            {% for error in car_ad_form.additional_comments.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div>
+            {{ car_ad_form.Submit(class="btns") }}
+            <!--<input class="btns" type="submit" value="Create Account" />-->
+    </div>
+
+    </form>
+</div>
+</section><div class="space-filler"></div><br><br>
+
+{% endblock %}

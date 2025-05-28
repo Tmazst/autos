@@ -1,0 +1,133 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    :root{--main-pcolor:#4835b6;--second-color:#363c74;}
+    .form-fields{display:flex;flex-direction:column;}
+    /* .sub-topics{margin: 0 auto;height:80px;width:60%;} */
+    .price-tag{font-size:30px;font-weight: 600;color: rgb(116, 101, 96)}
+    .search-cont{background-color:;display: flex;justify-content:center;padding:10px}
+    .search-cont input{border: 1px solid grey;border-radius:10px;padding: 5px;}
+    .availability{border-radius:5px;padding:5px 10px;background-color: coral;color:antiquewhite;font-weight: 600;}
+    .location{font-size:20px !important}
+    .sub-topics h1,small,p{text-align: center}
+    .sel-info-cont{display: flex;justify-content: center;align-items: center;}
+    .sel-info-cont p{text-wrap: nowrap}
+    .view-button{background-color:var(--main-pcolor)}
+    .view-button:hover{background:none;border:2px solid #25109e;color: }
+    .agent-btn:hover{background-color: var(--main-pcolor);}
+    .agent-btn{background:none;border:2px solid #25109e;color:var(--main-pcolor)}
+    .sub-topics{color:var(--main-pcolor)}
+    .details-keys{color:var(--main-pcolor)}
+    /* section{ background-image:url(static/images/bg_service.png) } */
+</style>
+
+
+<div style="width:;margin:0 auto">
+    <section id="" class="services hidden">
+
+        <!-- Flash message -->
+        <div class="sub-topics"><p></p></div>
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for  category, message in messages %}
+                        <div class="flash-messages alert-{{category}}"> {{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div><br>
+
+        <!-- Main  -->
+        <div class="sub-topics" style="background-color: ;margin-bottom: 10px;">
+            <h1 style="margin: 0 auto;text-align:center;color:var(--main-pcolor)">{{spare_qry.item_name}}<br></h1>
+            <h3 style="margin: 0 auto;text-align:center;color:var(--second-color)">{{spare_qry.other2}}</h3>
+            <!-- <small><span style="font-size:smaller">Enjoy this new selection of fresh</span></small> -->
+        </div><br>
+        <div style="margin-left:4%" class="main-img-cont">
+            <div ><img style="justify-content: flex-start" class="main-img" src="static/images/{{spare_qry.main_img}}" alt=""/></div>
+        </div><br>
+        <div class="car_details_cont">
+            <div><p class="sub-topics" >Spare Details</p>
+                <!-- <div class="line"></div> -->
+            </div>
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Date Posted:</span>   <span class="detail-value">[Create Timestamp]</span></p></div>
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Usage:</span>   <span class="detail-value"> {{spare_qry.other2}}</span></p></div>
+            {% if spare_qry.item_description %}
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Description:</span>   <span class="detail-value">{{spare_qry.item_description}}</span></p></div>
+            {% endif %}
+            {% if spare_qry.item_more_info %}
+            <div class="detail" style="background-color:red;"><p><span class="details-keys">More:</span>   <span class="detail-value">{{spare_qry.item_more_info}}</span></p></div>
+            {% endif %}
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Availability Status:</span>   <span class="detail-value"> [Available]</span></p></div>
+            <!-- <div class="detail" style="background-color:;"><p><span class="details-keys">Availability Status:</span>   <span class="detail-value"> Sold: </span></p></div> -->
+            <!-- <div class="detail" style="background-color:;"><p><span class="details-keys">Location:</span>   <span class="detail-value"></span></p></div> -->
+        </div><br>
+        <div class="car_details_cont">
+            <div><p class="sub-topics" >Seller Details</p>
+                <!-- <div class="line"></div> -->
+            </div>
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Name:</span>   <span class="detail-value"> {{agent_user.query.get(spare_qry.user_id).name}}</span></p></div>
+            <a href="tel:{{agent_user.query.get(spare_qry.user_id).contacts}}"><div class="detail" style="background-color:;"><p><span class="details-keys">Contact Details:</span>   <span class="detail-value"> {{agent_user.query.get(spare_qry.user_id).contacts}}</span></p></div></a>
+            {% if agent_user.query.get(spare_qry.user_id).whatsapp %}
+                <a href="wa.me:{{agent_user.query.get(spare_qry.user_id).whatsapp}}"><div class="detail" style="background-color:;"><p><span class="details-keys">Whatsapp:</span>   <span class="detail-value"> {{agent_user.query.get(spare_qry.user_id).whatsapp}}</span></p></div></a>
+            {% endif %}
+            {% if agent_user.query.get(spare_qry.user_id).facebook %}
+                <a href="{{agent_user.query.get(spare_qry.user_id).facebook}}"> <div class="detail" style="background-color:;"><p><span class="details-keys">Facebook:</span>   <span class="detail-value"> {{agent_user.query.get(spare_qry.user_id).facebook}}</span></p></div></a>
+            {% endif %}
+            {% if agent_user.query.get(spare_qry.user_id).address %}
+                <div class="detail" style="background-color:;"><p><span class="details-keys">Location:</span>   <span class="detail-value"> {{agent_user.query.get(spare_qry.user_id).address}}</span></p></div>
+            {% endif %}
+        </div>
+        <br>
+        
+        <div class="car_details_cont">
+            <div><p class="sub-topics" >Payment Details</p>
+                <!-- <div class="line"></div> -->
+            </div>
+            <div class="detail" style="background-color:;"><p><span class="details-keys">Price: </span>   <span class="detail-value"> E{{spare_qry.item_price}}</span></p></div>
+            <!-- <div class="detail"  style="background-color:;"><p><span class="details-keys">Payment Terms: </span>   <span class="detail-value"> </span></p></div> -->
+            <!-- <div class="detail"  style="background-color:;"><p><span class="details-keys">Neg. Level: </span>   <span class="detail-value"> </span></p></div> -->
+        </div>
+        <br>
+
+        <div><h2 style="color:#555">See Related:</h2></div>
+        <div style="" class="imgs-cont">
+            {% for spare_qry in related_spares %}
+                <!-- We exclude the current adverts, and check if img_1 is not none(database) and check if path file name exists in server  -->
+                {% if spare_qry.main_img and
+                     sys.path.exists(sys.path.join("static/uploads/",spare.main_img)) %}
+                <div style="justify-content:flex-start" class="thumb-cont imgs-chd-cont"> 
+                    <div style="display: flex;flex-direction:column;justify-content:center;width:150px;height:150px">
+                        <a href="/spare_view_details?id={{ser.dumps({'data':spare.id})}}"><img style="height:150px !important" class="car-image" src="static/uploads/{{spare.main_img}}"/></a>
+                        <p><span> {{spare_qry.item_name}} - {{spare_qry.other2}} </span></p><br>
+                        {% if spare_qry.item_name %}
+                            <p><span> [Available]</span></p>
+                        {% else %}
+                            <small><span> Sold: </span></p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <h1 style="color:#999">Other Images:</h1>
+
+        <div class="images-collage">
+
+                {% if spare_qry.images1 and sys.path.exists(sys.path.join("static/uploads/",spare_qry.images1 )) %}
+                    <img id="" style="max-width:300px;" class="del-icon" src="static/uploads/{{spare_qry.images1}}"  />
+                {% endif %}
+
+                {% if spare_qry.images2 and sys.path.exists(sys.path.join("static/uploads/",spare_qry.images2 )) %}
+                    <img id="" style="max-width:300px;" class="del-icon" src="static/uploads/{{spare_qry.images2}}"  />
+                {% endif %}
+
+        </div>
+
+    </section><div class="space-filler"></div><div class="space-filler">
+</div>
+
+{% endblock %}

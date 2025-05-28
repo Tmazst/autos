@@ -1,0 +1,188 @@
+
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .sel-tag{display:none}
+</style>
+
+<section id="" class="services ">
+    
+    <div class="flash-messages ">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for  category, message in messages %}
+                    <div class="flash-messages alert-{{category}}"> {{message}}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div><br>
+
+    <h1 style="margin-left:30px;width: auto;">Add Item NO.</h1>
+    <div class="" >
+            <div style="z-index:551">
+                <div class="form-container">
+                    <div class="space-filler"></div>
+                <div class="cap-icons">
+                    <small style="border:none;background-color:;text-align:left;" class="sub-topic-details" >Create Spares Advert</small><br></div>
+                <div class="sel-tag2">
+                    <small>We are moving foward</small>
+                    <small></small>
+                </div><br>
+                <div class="line"></div><br>
+                
+                <form class="form-submit" style="background-color: f8db5a;width:;"  _lpchecked="1" action="" method="post" enctype="multipart/form-data">
+                    <div><small style="border:none" class="form-groups-subs">Spare Details</small></div><br>
+                    
+                    <!-------Post By--------->
+                    <div class="job-ad-group marginise-bottom">
+                        {{ spares_item.hidden_tag() }}
+                    </div>
+
+                    <!-- Item Name -->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.item_name.label(class="labels") }}
+                        {{ spares_item.item_name(class="form-control adj-width-60", placeholder="Petrol Pump") }}
+                        {% if spares_item.item_name.errors %}
+                            {% for error in spares_item.item_name.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!-- Item Model -->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.item_other3.label(class="labels") }}
+                        {{ spares_item.item_other3(class="form-control adj-width-60", placeholder="Part Model") }}
+                        {% if spares_item.item_other3.errors %}
+                            {% for error in spares_item.item_other3.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Item Part No. -->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.item_other4.label(class="labels") }}
+                        {{ spares_item.item_other4(class="form-control adj-width-60", placeholder="Part Number") }}
+                        {% if spares_item.item_other4.errors %}
+                            {% for error in spares_item.item_other4.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!------- Main Image --------->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.main_img.label(class="labels") }}
+                        {{ spares_item.main_img(class="form-control") }}<br>
+                        {% if spares_item.main_img.errors %}
+                            {% for error in spares_item.main_img.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!-- <div><h4 style="border:none" class="">You can also Specify;</h4></div> -->
+
+                    <!-- Item Caption -->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.item_caption.label(class="labels") }}
+                        {{ spares_item.item_caption(class="form-control adj-width-60", placeholder="caption") }}
+                        {% if spares_item.item_caption.errors %}
+                            {% for error in spares_item.item_caption.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!-- Item Condition -->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.item_other2.label(class="labels") }}
+                        {{ spares_item.item_other2(class="form-control adj-width-60") }}
+                        {% if spares_item.item_other2.errors %}
+                            {% for error in spares_item.item_other2.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    
+
+                    <!------- Item Description --------->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.item_description.label(class="labels") }}
+                        {{ spares_item.item_description(class="form-control adj-width-60", placeholder="Describe the item") }}
+                        {% if spares_item.item_description.errors %}
+                            {% for error in spares_item.item_description.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!------- Ingredients --------->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.item_more_info.label(class="labels") }}
+                        {{ spares_item.item_more_info(class="form-control adj-width-60", placeholder="Other info") }}
+                        {% if spares_item.item_more_info.errors %}
+                            {% for error in spares_item.item_more_info.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!------- Food Group --------->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.item_spare_department.label(class="labels") }}
+                        {{ spares_item.item_spare_department(class="form-control adj-width-60", placeholder="e.g. Electrical") }}
+                        {% if spares_item.item_spare_department.errors %}
+                            {% for error in spares_item.item_spare_department.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!------- Item Price --------->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.item_price.label(class="labels") }}
+                        {{ spares_item.item_price(class="form-control adj-width-60", placeholder="e.g. E120.00") }}
+                        {% if spares_item.item_price.errors %}
+                            {% for error in spares_item.item_price.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!------- Images1 --------->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.images1.label(class="labels") }}
+                        {{ spares_item.images1(class="form-control") }}
+                        {% if spares_item.images1.errors %}
+                            {% for error in spares_item.images1.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!------- Images2 --------->
+                    <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                        {{ spares_item.images2.label(class="labels") }}
+                        {{ spares_item.images2(class="form-control") }}
+                        {% if spares_item.images2.errors %}
+                            {% for error in spares_item.images2.errors %}
+                                <span class="span-error" >*{{error}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!-------Submit--------->
+                    <div>
+                        {{ spares_item.submit(class="btns") }}
+                    </div>
+
+                </form><br><br>
+            </div>
+        </div>
+    </div>
+</section><br><br>
+
+{% endblock %}

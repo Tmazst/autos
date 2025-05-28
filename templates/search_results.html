@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .form-fields{display:flex;flex-direction:column;}
+    .sub-topics{margin: 0 auto;height:80px;width:60%;}
+    .price-tag{font-size:30px;font-weight: 600;color: rgb(116, 101, 96)}
+    .search-cont{background-color:;display: flex;justify-content:center;padding:10px}
+    .search-cont input{border: 1px solid grey;border-radius:10px;padding: 5px;}
+    .availability{border-radius:5px;padding:5px 10px;background-color: coral;color:antiquewhite;font-weight: 600;}
+    .location{font-size:20px !important}
+    .sub-topics h1,small,p{text-align: center}
+    .sel-info-cont{display: flex;justify-content: center;align-items: center;}
+    .sel-info-cont p{text-wrap: nowrap}
+    /* section{ background-image:url(static/images/bg_service.png) } */
+</style>
+
+<div style="width:;margin:0 auto;background-color:;">
+    <!-- <a id="contact_us"></a> -->
+    <section style="background-color:;" id="" class="services hidden">
+        <!-- Flash message -->
+        
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for  category, message in messages %}
+                        <div class="flash-messages alert-{{category}}"> {{message}}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div><br>
+
+        <!-- <div class="sub-topics"><p></p></div> -->
+
+        <!-- <div class="search-cont"><a href="/search?search_value=value"><input type="search" placeholder="search" value=""></a></div><br> -->
+
+        <div class="search-cont">
+            <form action="/search" method="get">
+              <input type="search" name="search_value" placeholder="Search" value="">
+              <button type="submit">Search</button>
+            </form>
+        </div><br>
+
+        <div style="border:none;" class="imgs-cont-search">
+            {% for row in rows %}
+                <a style="margin: 0 auto" href="/search_view_details?id={{row[23]}}">
+                    <div style="margin: 0 auto" class="thumb-cont imgs-search-cont">
+                        <div style="display: flex;flex-direction:column;justify-content:center;width:200px">
+                            <img class="car-image" src="static/uploads/{{images_qry.query.filter_by(token=row[23]).first().img_1}}"/>
+                            <p><span> {{row[2]}} - {{row[3]}} </span></p>
+                            <!-- Check if car still available  -->
+                            {% if row[13] == 1 %}
+                                <p><span> Available</span></p>
+                            {% else %}
+                                <p><span> Sold: {{row[14]}}</span></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div><div class="space-filler"></div>
+
+    </section>
+    
+</div>
+
+
+<div class="space-filler"></div>
+
+<script>
+
+</script>
+{% endblock %}

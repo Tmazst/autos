@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .form-fields{display:flex;flex-direction:column;}
+    .sub-topics{margin: 0 auto;height:80px;width:60%;}
+    /* .price-tag{font-size:30px;font-weight: 800;} */
+    .search-cont{background-color:;display: flex;justify-content:center;padding:10px}
+    .search-cont input{border: 1px solid #4a9792;border-radius:10px;padding: 5px;}
+    .availability{border-radius:5px;padding:5px 10px;background-color: coral;color:antiquewhite;font-weight: 600;}
+    .location{font-size:20px !important}
+    .sub-topics h1,small,p{text-align: center}
+    .sel-info-cont{width:100%}
+    .sel-info-cont p{text-wrap: nowrap}
+    /* section{ background-image:url(static/images/bg_service.png) } */
+
+    .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        padding-top: 60px;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.85);
+        transition: all 0.3s;
+    }
+    .image-modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90vw;
+        max-height: 80vh;
+        width: auto;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 32px rgba(0,0,0,0.5);
+        animation: zoomIn 0.3s;
+    }
+    @keyframes zoomIn {
+        from {transform: scale(0.7);}
+        to {transform: scale(1);}
+    }
+    .close-modal {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 10001;
+        transition: color 0.2s;
+    }
+    .close-modal:hover {
+        color: #ffb300;
+    }
+    @media (max-width: 600px) {
+        .image-modal-content {
+            max-width: 98vw;
+            max-height: 60vh;
+        }
+        .close-modal {
+            top: 10px;
+            right: 20px;
+            font-size: 32px;
+        }
+    }
+</style>
+
+<div style="width:;margin:0 auto;background-color:;">
+    <!-- <a id="contact_us"></a> -->
+    <section style="background-color:;" id="" class="services hidden">
+        <!-- Flash message -->
+
+        <div class="flash-messages ">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for  category, message in messages %}
+                        <div class="flash-messages alert-{{category}}"> {{message}}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- <div class="sub-topics"><p></p></div> -->
+        <!-- <div class="search-cont"><a href="/search?search_value=value"><input type="search" placeholder="search" value=""></a></div><br> -->
+
+        <div class="search-cont">
+            <form action="/search" method="get">
+              <input type="search" name="search_value" placeholder="Search" value="">
+              <button type="submit">Search</button>
+            </form>
+        </div><br>
+
+        <!-- Main  -->
+         {% for car_obj in car_ads %}
+         <!-- <div style="margin:0 auto;width:80%" class="btns"></div><br> -->
+         <div class="car-container gen-flex-col">
+            <!-- <div class="" style="background-color:red;margin-bottom: 10px;wi"> -->
+
+                <div style="justify-content: flex-start;" class="car-name">
+                    <h1 style="margin-bottom: 0">{{car_obj.car_make.title()}}</h1>
+                    <div style="justify-content: flex-start" class="gen-flex">
+                        <div  class="model">{{car_obj.car_model}}</div>
+                        <div class="model">{{car_obj.other}}</div>
+                    </div><br>
+                </div>
+                
+                <!-- Modal  -->
+                <div class="sel-info-cont">
+                        <div style="background-color: ;padding-left:10px" width="">
+                            <div id="popup_{{car_obj.user_id}}" class="pop-up">
+                                <div style="" id="pop-cont_{{car_obj.user_id}}" class="pop-cont">
+                                    <form name="Logo Quote Request" method="post">
+                                        <h1 style="margin:0 auto">Contact Seller</h1>
+                                        <div><hr></div>
+                                            <div style="background-color:;" class="bool-opt-cont">
+                                                <div  ><p></p></div>
+                                                <div class="update-icons-lnks"><img class="update-icons" src="static/icons/updates-call-icon.png" /><a class="contact-lnks" id="cell-no" href="tel:{{agent_usr.query.get(car_obj.user_id).contacts}}">{{agent_usr.query.get(car_obj.user_id).contacts}}</a></div>
+                                                {% if agent_usr.query.get(car_obj.user_id).whatsapp %}
+                                                <div class="update-icons-lnks"><img class="update-icons" src="static/icons/whatsapp-icon.png" /><a class="contact-lnks" id="cell-wa" href="https://wa.me/{{agent_usr.query.get(car_obj.user_id).whatsapp}}">{{agent_usr.query.get(car_obj.user_id).whatsapp}}</a></div>
+                                                {% endif %}
+                                                <div class="update-icons-lnks"><img class="update-icons" src="static/icons/updates-email-icon.png" /><a class="contact-lnks" id="cell-em" href="mailto:{{agent_usr.query.get(car_obj.user_id).email}}">{{agent_usr.query.get(car_obj.user_id).email}}</a></div>
+                                            </div><br><br>
+                                    </form>
+                                    <div style="flex-grow:1"></div>
+                                    <div style="align-self:flex-end"><input onclick="closePopup('{{car_obj.user_id}}')" type="button" value="Exit"></div>
+                                </div>
+                            </div>  
+                        </div>
+                    </a>
+                </div>
+
+            <!-- </div> -->
+            <!-- MAIN IMAGE  -->
+            <div class="main-img-cont">
+                <img onclick="imgViewer(event)" id="image-{{ car_obj.id }}" class="main-img" src="static/uploads/{{images_cls.query.filter_by(car_details_id=car_obj.id).first().image_url}}"  />
+            </div>
+
+            <div class="sel-info-cont">
+                <input type="text" style="display: none" class="price" value="{{car_obj.sale_price}}" />
+                <labe>Price</labe>
+                <div id="currency" class="price-tag" >E{{car_obj.sale_price}}</div>
+                <!-- <div style="background-color:;" width="0%" class="counter" class="price-tag">0</div> -->
+                <!-- <div  style="font-size: 2em;">0</div>  -->
+            </div>
+
+        
+
+            <div class="imgs-cont-wrapper">
+                <button class="gallery-arrow left" onclick="scrollGallery(this, -1)">&#8592;</button>
+                <div style="overflow-x:auto;width:100%;" class="imgs-cont gen-flex">
+                    {% for img in images_cls.query.filter_by(car_details_id=car_obj.id).all() %}
+                        <div class="scrollable-img-cont">
+                            <div style="justify-content: flex-start;" class="thumb-cont imgs-chd-cont">
+                                <img class="car-image" id="img-0{{img.id}}" src="static/uploads/{{ img.image_url }}" onclick="displayImage('{{car_obj.id}}' ,'{{ img.image_url }}')"/>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="gallery-arrow right" onclick="scrollGallery(this, 1)">&#8594;</button>
+            </div>
+
+            <div style="" class="specs-cont gen-flex-wrap">
+                <div class="specs gen-flex-col">
+                    <img class="specs-icon" src="static/icons/fuel-icon.png" />
+                    <label>Fuel Type</label>
+                    <div style="color:#777" class="specs-value">
+                        {% if car_obj.car_feature4 %}
+                            {{car_obj.car_feature4.title()}}
+                        {% else %}
+                            NA
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="specs gen-flex-col">
+                    <img class="specs-icon" src="static/icons/car-body-icon.png" />
+                    <label>Body Type</label>
+                    <div style="color:#777" class="specs-value">
+                        {% if car_obj.car_make %}
+                            {{car_obj.car_make.title()}}
+                        {% else %}
+                            NA
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="specs gen-flex-col">
+                    <img class="specs-icon" src="static/icons/mileage-icon.png" />
+                    <label>Mileage</label>
+                    <div style="color:#777" class="specs-value">
+                        {% if car_obj.mileage %}
+                            {{car_obj.mileage}}KM
+                        {% else %}
+                            NA
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="specs gen-flex-col">
+                    <img class="specs-icon" src="static/icons/year-icon.png" />
+                    <label>Year</label>
+                    <div style="color:#777;text-align: center;" class="specs-value">
+                        {% if car_obj.other %}
+                            {{car_obj.other}}
+                        {% else %}
+                            NA
+                        {% endif %}
+                    </div>
+                </div>
+
+
+            </div><br>
+            <div class="btns">Interested?</div>
+            <div class="gen-flex">
+                <a href="tel:268 7642 2995">
+                    <div class="btns-outlined"><img src="static/icons/updates-call-icon.png" class="icons" ></div>
+                </a>
+                <a href="https://wa.me/268 7642 2995">
+                    <div class="btns-outlined"><img src="static/icons/updates-whatsapp-icon.png" class="icons" ></div>
+                </a>
+            </div>
+            <div style="font-size: 13px;" class="btns-outlined"><a href="#">{{car_obj.car_make}} {{car_obj.car_model}}</a></div>
+        </div><br><br>
+        {% endfor %}
+    </section>
+    
+</div>
+
+<!-- Image Viewer Modal -->
+<div id="imageModal" class="image-modal">
+    <span class="close-modal" onclick="closeImageModal()">&times;</span>
+    <img class="image-modal-content" id="modalImage">
+</div>
+
+
+
+<div class="space-filler"></div>
+
+{% if current_user.whatsapp %}
+    <div class="whatsapp-icon">
+        <a href="https://wa.me/268 7642 2995"><img style="height:40px;" class="car-image" src="static/icons/whatsapp-icon.png"></a>
+    </div>
+{% endif %}
+
+<div class="space-filler"></div>
+
+{% if not current_user.whatsapp %}
+    <div class="whatsapp-icon">
+        <a href="https://wa.me/268 7642 2995"><img style="height:40px;" class="car-image" src="static/icons/whatsapp-icon.png"></a>
+    </div>
+{% endif %}
+<br><br><br>
+<script>
+
+function scrollGallery(btn, dir) {
+    // Find the imgs-cont div relative to the button
+    const wrapper = btn.closest('.imgs-cont-wrapper');
+    const container = wrapper.querySelector('.imgs-cont');
+    // Scroll by the width of one image (or a fixed amount)
+    const scrollAmount = container.querySelector('.scrollable-img-cont')?.offsetWidth || 150;
+    container.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
+}
+
+//Modal
+function imgViewer(event) {
+    var modal = document.getElementById("imageModal");
+    var modalImg = document.getElementById("modalImage");
+    modal.style.display = "block";
+    modalImg.src = event.target.src;
+    document.body.style.overflow = "hidden";
+}
+function closeImageModal() {
+    var modal = document.getElementById("imageModal");
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+}
+// Optional: Close modal on ESC key or click outside image
+window.addEventListener('keydown', function(e) {
+    if (e.key === "Escape") closeImageModal();
+});
+document.getElementById("imageModal").addEventListener('click', function(e) {
+    if (e.target === this) closeImageModal();
+});
+//--Modal
+
+
+
+function displayImage(carId, image) {
+    console.log("Displaying image for car ID:", carId, "Image:", image);
+    // Select the main image for the car using its unique ID
+    let mainImg = document.getElementById("image-" + carId);
+    if (mainImg) {
+        mainImg.src = "static/uploads/" + image;
+    }
+}
+
+// Counter 
+
+let counts; // Declare counts variable
+let actual = document.querySelectorAll(".price");
+let initial = 100;
+let upto = 1500;
+
+
+function startCounting() {
+    // Start the counter
+    counts = setInterval(updated, 0.1); // Adjusting interval for smooth effect
+}
+
+function updated() {
+    // let count = document.getElementById("counter");
+    const counterElements = document.querySelectorAll(".counter");
+    // let currency = document.querySelector("#currency");
+    counterElements.forEach(each => {
+        // count.innerHTML = ++bogus;
+        const car_price = actual.value;
+        let bogus = actual.value - 1000;
+        
+        each.innerHTML = ++bogus;
+            if (bogus >= 106000) {
+                // currency.classList.add('bulge-animate');
+                each.classList.add('bulge-animate');
+                
+                clearInterval(counts);
+                // actual.innerHTML = actual.value;
+            }
+    });
+}
+
+function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+window.addEventListener('scroll', function() {
+    // const counterElement = document.getElementById("counter");
+    const counterElements = document.querySelectorAll(".counter");
+    counterElements.forEach(each => {
+        // if (isElementInViewport(counterElement) && !counts) {
+        if (isElementInViewport(each) && !counts) {
+            startCounting(); // Start counting if in viewport
+        }
+    });
+});
+
+
+</script>
+{% endblock %}

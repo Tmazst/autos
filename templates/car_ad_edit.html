@@ -1,0 +1,293 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section id="" class="services hidden">
+    <div class="form-container">
+    <div><small style="border:none" class="sub-topic-details" >Car Advert Editor</small><br>
+    <small>A fast and convient plartform in Eswatini to sell and manage your car sales records</small>
+    </div>
+
+    <div class="line"></div><br>
+
+    <form style=""  _lpchecked="1" action="" method="post"  enctype="multipart/form-data">
+        
+    </form>
+    
+    <form style="background-color:f8db5a;width:;"  _lpchecked="1" action="" method="post"  enctype="multipart/form-data">
+        <div  style="position: relative;" class="main-img-cont">
+            {%  if images.query.filter_by(token=car_details_query.token).first().img_1 and sys.path.exists(sys.path.join("static/uploads/",images.query.filter_by(token=car_details_query.token).first().img_1)) %}                                                           
+                <img id="image" class="main-img" src="static/uploads/{{images.query.filter_by(token=car_details_query.token).first().img_1}}"  />
+                <!-- <img style="height:45px" id="image" class="main-img" src="static/icons/tx-sales-trend-upwards-add-btn.png"  /> -->
+            {% else %}
+                <div class="add-btn-cont">
+                    <a href=""><img style="height:45px" id="image" class="main-img" src="static/icons/tx-sales-trend-upwards-add-btn.png"  /><br></a>
+                    <label style="font-size:12px;color:#7a7a7a">Replace Image</label>
+                    {{car_details_form.main_image(style="color:grey;width:38%")}}
+                </div><br>
+                {{ car_ad_form.Submit(class="btns",value="Update") }}
+            {% endif %}
+        </div><br>
+
+        <div><small style="border:none" class="form-groups-subs" >Vehicle Details</small></div><br>
+        <!-------car_make--------->
+        <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+            {{car_ad_form.hidden_tag()}}
+            {{ car_ad_form.car_make.label(class="labels")}}
+            {{ car_ad_form.car_make(class="form-control adj-width-60", placeholder="Project Title", value=car_details_query.car_make)}}
+            {% if car_ad_form.car_make.errors %}
+                {% for error in car_ad_form.car_make.errors %}
+                    <span class="span-error" >*{{error}}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------car_model--------->
+        <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+            {{ car_ad_form.car_model.label(class="labels")}}
+            {{ car_ad_form.car_model(class="form-control adj-width-60", placeholder="Car Model", value=car_details_query.car_model)}}
+            {% if car_ad_form.car_model.errors %}
+                {% for error in car_ad_form.car_model.errors %}
+                    <span class="span-error" >*{{error}}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------vin--------->
+        <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+            {{ car_ad_form.vehicle_id_number.label(class="labels")}}
+            {{ car_ad_form.vehicle_id_number(class="form-control adj-width-60", placeholder="VIN", value=car_details_query.vehicle_id_number)}}
+            {% if car_ad_form.vehicle_id_number.errors %}
+            {% for error in car_ad_form.vehicle_id_number.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Location--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.location.label(class="labels")}}
+            {{ car_ad_form.location(class="form-control adj-width-60",placeholder="e.g. Sidvwashini", value=car_details_query.other2)}}
+            {% if car_ad_form.location.errors %}
+            {% for error in car_ad_form.location.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Color--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.car_color.label(class="labels")}}<br>
+            {{ car_ad_form.car_color(class="form-control adj-width-60",placeholder="Describe Project", value=car_details_query.car_color)}}
+            {% if car_ad_form.car_color.errors %}
+            {% for error in car_ad_form.car_color.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------car_feature1--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.car_feature1.label(class="labels")}}
+            {{ car_ad_form.car_feature1(class="form-control adj-width-60",placeholder="e.g. Sport Rims", value=car_details_query.car_feature1)}}
+            {% if car_ad_form.car_feature1.errors %}
+            {% for error in car_ad_form.car_feature1.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Car Defects--------->
+        <!-- <div style="display:flex"> -->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.car_defects.label(class="labels")}}
+            <textarea style="height:50px" placeholder="e.g Needs Service, Front Bumper Cracked" name="car_defects" class="form-control adj-width-60">{{car_details_query.car_defects}}</textarea>
+            {% if car_ad_form.car_defects.errors %}
+            {% for error in car_ad_form.car_defects.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <!-- <p style="margin:0 5px;">   </p> -->
+
+        <!-------MILEAGE--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.mileage.label(class="labels")}}
+            {{ car_ad_form.mileage(class="form-control adj-width-60",placeholder="e.g 125 420km", value=car_details_query.mileage)}}
+            {% if car_ad_form.mileage.errors %}
+            {% for error in car_ad_form.mileage.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <!-- </div> -->
+
+        <div><small style="border:none" class="form-groups-subs" >Payments</small></div><br>
+
+        <!-------BENEFITS--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.sale_price.label(class="labels")}}
+            {{ car_ad_form.sale_price(class="form-control adj-width-60",placeholder="e.g. E70 000", value=car_details_query.sale_price)}}
+            {% if car_ad_form.sale_price.errors %}
+            {% for error in car_ad_form.sale_price.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Application Deadline--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.payment_terms.label(class="labels")}}<br>
+            {{ car_ad_form.payment_terms(class="form-control adj-width-60", value=car_details_query.payment_terms)}}
+            {% if car_ad_form.payment_terms.errors %}
+            {% for error in car_ad_form.payment_terms.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Post By--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.negotiation_level.label(class="labels")}}<br>
+            {{ car_ad_form.negotiation_level(class="form-control adj-width-60", value=car_details_query.negotiation_leve)}}
+            {% if car_ad_form.negotiation_level.errors %}
+            {% for error in car_ad_form.negotiation_level.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div><small style="border:none" class="form-groups-subs" >Legal Status</small></div><br>
+
+
+        
+        <!---------Registration--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.registration_docs_status.label(class="labels")}}<br>
+            {{ car_ad_form.registration_docs_status(class="form-control adj-width-60", value=car_details_query.registration_docs_status)}}
+            {% if car_ad_form.registration_docs_status.errors %}
+                {% for error in car_ad_form.registration_docs_status.errors %}
+                    <span class="span-error" >*{{error}}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!---------Registration--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ car_ad_form.registration_docs_due.label(class="labels")}}<br>
+            {{ car_ad_form.registration_docs_due(class="form-control adj-width-60",placeholder="E250.00 due", value=car_details_query.registration_docs_due)}}
+            {% if car_ad_form.registration_docs_due.errors %}
+                {% for error in car_ad_form.registration_docs_due.errors %}
+                    <span class="span-error" >*{{error}}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div><small style="border:none" class="form-groups-subs" >Usage</small></div><br>
+
+        <!---------Usage--------->
+        <div class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.usage.label(class="labels")}}<br>
+            {{ car_ad_form.usage(class="form-control adj-width-60",placeholder="How long have you used the car", value=car_details_query.other)}}
+            {% if car_ad_form.usage.errors %}
+            {% for error in car_ad_form.usage.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div><small style="border:none" class="form-groups-subs" >Comments</small></div><br>
+
+
+        <!-------Post By--------->
+        <div class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.additional_comments.label(class="labels")}}<br>
+            <textarea style="height:50px" placeholder="Your Comments about the car" name="additional_comments" class="form-control adj-width-60">{{car_details_query.additional_comments}}</textarea>
+            {% if car_ad_form.additional_comments.errors %}
+                {% for error in car_ad_form.additional_comments.errors %}
+                    <span class="span-error" >*{{error}}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Images--------->
+        <div class="job-ad-group marginise-bottom">
+
+            {{ car_ad_form.car_images.label(class="labels")}}<br>
+            {{ car_ad_form.car_images(class="form-control adj-width-60")}}
+            {% for error in car_ad_form.car_images.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+
+        </div>
+
+        <div>
+            {{ car_ad_form.Submit(class="btns",value="Update") }}
+            <!--<input class="btns" type="submit" value="Create Account" />-->
+    </div><br>
+    <h1 style="color:#999">Car Images:</h1>
+
+    <div class="images-collage">
+        {% for car_img in images.query.filter_by(token=car_details_query.token).all() %}
+            {% if car_img.img_1 and sys.path.exists(sys.path.join("static/uploads/",images.query.filter_by(token=car_details_query.token).first().img_1)) %}
+            <div style="position:relative">
+                <img  id="" style="height:;"  class="main-img" src="static/uploads/{{car_img.img_1}}"  />
+                <div class="delete-icon-cont">
+                    <a class="svg-hrefs" href="/car_ad_form_edit?img={{ser.dumps({'data':loop.index})}}&err={{car_details_query.token}}"><object class="object-svgs" type="image/svg+xml" data="static/icons/delete-icon.svg"></object></a>
+                </div>
+            </div>
+            {% endif %}
+            {% if car_img.img_2 and sys.path.exists(sys.path.join("static/uploads/",images.query.filter_by(token=car_details_query.token).first().img_2)) %}
+            <div style="position:relative">
+                <img  id="" style="height:;"  class="main-img" src="static/uploads/{{car_img.img_2}}"  />
+                <div class="delete-icon-cont">
+                    <a class="svg-hrefs" href="/car_ad_form_edit?img={{ser.dumps({'data':images.query.filter_by(token=car_details_query.token).first().img_2})}}&err={{car_details_query.token}}">
+                        <object class="object-svgs" type="image/svg+xml" data="static/icons/delete-icon.svg"></object></a>
+                </div>
+            </div>
+            {% endif %}
+            {% if car_img.img_3 and sys.path.exists(sys.path.join("static/uploads/",images.query.filter_by(token=car_details_query.token).first().img_3))%}
+            <div style="position:relative">
+                <img  id="" style="height:;"  class="main-img" src="static/uploads/{{car_img.img_3}}"  />
+                <div class="delete-icon-cont">
+                    <a class="svg-hrefs" href="/car_ad_form_edit?img={{ser.dumps({'data':loop.index})}}&err={{car_details_query.token}}"><object class="object-svgs" type="image/svg+xml" data="static/icons/delete-icon.svg"></object></a>
+                </div>
+            </div>
+            {% endif %}
+            {% if car_img.img_4 and sys.path.exists(sys.path.join("static/uploads/",images.query.filter_by(token=car_details_query.token).first().img_4)) %}
+            <div style="position:relative">
+                <img  id="" style="height:;"  class="main-img" src="static/uploads/{{car_img.img_4}}"  />
+                <div class="delete-icon-cont">
+                    <a class="svg-hrefs" href="/car_ad_form_edit?img={{ser.dumps({'data':loop.index})}}&err={{car_details_query.token}}"><object class="object-svgs" type="image/svg+xml" data="static/icons/delete-icon.svg"></object></a>
+                </div>
+            </div>
+            {% endif %}
+            {% if car_img.img_5 and sys.path.exists(sys.path.join("static/uploads/",images.query.filter_by(token=car_details_query.token).first().img_5)) %}
+            <div style="position:relative">
+                <img  id="" style="height:;"  class="main-img" src="static/uploads/{{car_img.img_5}}"  />
+                <div class="delete-icon-cont">
+                    <a class="svg-hrefs" href="/car_ad_form_edit?img={{ser.dumps({'data':loop.index})}}&err={{car_details_query.token}}"><object class="object-svgs" type="image/svg+xml" data="static/icons/delete-icon.svg"></object></a>
+                </div>
+            </div>
+            {% endif %}
+            {% if car_img.img_6 and sys.path.exists(sys.path.join("static/uploads/",images.query.filter_by(token=car_details_query.token).first().img_6)) %}
+            <div style="position:relative">
+                <img  id="" style="height:;"  class="main-img" src="static/uploads/{{car_img.img_6}}"  />
+                <div class="delete-icon-cont">
+                    <a  class="svg-hrefs" href="/car_ad_form_edit?img={{ser.dumps({'data':loop.index})}}&err={{car_details_query.token}}"><object class="object-svgs" type="image/svg+xml" data="static/icons/delete-icon.svg"></object></a>
+                </div>
+            </div>
+            {% endif %}
+            <!-- <img id="image2" style="height:100px;" class="main-img" src="static/uploads/{{car_img.img_2}}"  />
+            <img id="image3" style="height:100px;" class="main-img" src="static/uploads/{{car_img.img_3}}"  />
+            <img id="image4" style="height:100px;" class="main-img" src="static/uploads/{{car_img.img_4}}"  />
+            <img id="image5" style="height:150px;" class="main-img" src="static/uploads/{{car_img.img_5}}"  />
+            <img id="image6" style="height:150px;" class="main-img" src="static/uploads/{{car_img.img_6}}"  /> -->
+        {% endfor %}
+    </div>
+
+    </form>
+</div>
+</section><div class="space-filler"></div><br><br>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="static/src/css/styles_cbs.css" />
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+    <title>Graceful Autos</title>
+<div class="header-company-name">Graceful Autos</div>
+    <div class="bar gen-flex">
+        <div style="height:50px;width:max-content " class="main-img-cont">
+            <img id="" style="height:50px" class="main-img" src="static/images/logo.jpg"  />
+        </div>
+        <div class="physical_addr">
+            <p>Graceful Autos | Car Sales </span></p>
+        </div>
+
+        <div style="font-weight: 600;flex-direction: row;" class="header-contacts filler gen-flex">
+            
+            <div id="number" >(+268) 7642 2995</div> 
+            <div id="email">graceautos@gmail.com</div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/graceful.autos.3" target="_blank"><img class="icons" src="static/icons/facebook-icon.png" alt="Facebook"></a>
+            </div>
+        </div>
+
+        <div style="" class="user">
+            <div class="user-label">
+                {% if current_user.is_authenticated %}
+                    <a class="user-label text-decor" href="/user_acc" >
+                        <div style="background:none;"><span style="font-size:12px;text-wrap: nowrap;font-weight: 700;color:rgb(65, 55, 55)" class="nav-link"></span></div>
+                        <div style="height:40px;width:40px" class="img-cont">
+                                <img class="prf-image" src="static/images/default.png" alt=""/>
+                        </div class="flex-center">
+                    </a>
+                    <div class="user-icns"><a class="btns-outlined links-user" href="/logout">Logout</a></div>
+                {% else %}
+                    <a href="/login" ><div class="user-icns"><img class="icons" src="static/icons/login-icon.png"></div></a> 
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</head>
+
+<body><br>
+    <div class="container">
+        {%if current_user.is_authenticated %}
+            <nav style="margin: 0 auto;background-color:;width:100% !important" id="nav-div-cont">
+                <div style="margin: 0 auto;background-color:blue;width:100%" class="navbar-nav">
+                    <div style="" class="nav-item-main">
+                        <a class="nav-link-img" href="/"><img class="social-icon-main" alt=""  src="static/icons/car_bids_home.png" /></a>
+                        <div id="cars" class="nav-cap">Home</div>
+                    </div>
+                <li class="nav-item-main active">
+                    <a class="nav-link-img" href="/"><div><img class="social-icon-main" alt=""  src="static/icons/car_bids_adverts.png" /></div></a>
+                    <div class="nav-cap">Cars</div>
+                </li>
+                <li class="nav-item-main">
+                    <a class="nav-link-img" href="/car_ad_form"><div><img class="social-icon-main" alt="" src="static/icons/car_bids_post_ad.png" /></div></a>
+                    <div class="nav-cap">Post Car</div>
+                </li>
+                <div class="nav-item-main">
+                    <a class="nav-link-img" href="/ads_perfomances"><div class="img-nav-cont" style="background-color:;" ><img class="social-icon-main" alt=""  src="static/icons/car_bids_manage.png" /></div></a>
+                    <div class="nav-cap">Manage</div>
+                </div>
+                </div>
+            </nav>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+        <!-- <div id="image-viewer">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="full-image">
+        </div> -->
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="static/src/js/js_script.js">
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>

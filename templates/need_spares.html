@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .form-fields{display:flex;flex-direction:column;}
+    .sub-topics{margin: 0 auto;height:80px;width:60%;}
+    .price-tag{font-size:30px;font-weight: 600;color: rgb(116, 101, 96)}
+    .search-cont{background-color:;display: flex;justify-content:center;padding:10px}
+    .search-cont input{border: 1px solid grey;border-radius:10px;padding: 5px;}
+    .availability{border-radius:5px;padding:5px 10px;background-color: coral;color:antiquewhite;font-weight: 600;}
+    .location{font-size:20px !important}
+    .sub-topics h1,small,p{text-align: center}
+    .sel-info-cont{display: flex;justify-content: center;align-items: center;}
+    .sel-info-cont p{text-wrap: nowrap}
+    /* section{ background-image:url(static/images/bg_service.png) } */
+</style>
+
+<div style="width:;margin:0 auto;background-color:;">
+    <!-- <a id="contact_us"></a> -->
+        <!-- Flash Message -->
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for  category, message in messages %}
+                        <div class="flash-messages alert-{{category}}"> {{message}}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div><br>
+
+
+<!--  Second Post  -->
+{% for food_group in food_groups %}
+    {% for item in query_menu %}
+        {% if food_group == item.item_food_group %}
+        <section>  
+            <div class="cont">
+                <h1 class="food-group">{{food_group}}</h1>
+                <div class="menu-item-container" >
+                    <div class="item-images-cont">
+                        
+                        <div style="" class="item-main-img">
+                            <div class="bg-image">
+                                <img src="static/uploads/{{item.main_img}}" />
+                            </div>
+                            <img class="foreground-image" style="height:inherit" src="static/uploads/{{item.main_img}}" />
+                        </div>
+                        
+                        <div class="other-images">
+                            <div class="other-imgs"><img style="height:100%" class="" src="static/uploads/{{item.images1}}" /></div>
+                            <div class="other-imgs"><img style="height:100%" class="" src="static/uploads/{{item.images2}}" /></div>
+                        </div>
+                        <div class="price-tag-outline" id="dynamic-after"><label class="price-label" style="padding:px;">{{item.item_price}}</label><label class="price-label" style="font-size: 13px;">.50</label></div> 
+                    </div>
+                </div><br>
+                <div class="item-name widther">{{item.item_name}}</div>
+                <div class="item-caption widther">{{item.item_caption}}</div>
+                <div><a href="/place_order?mid={{ser.dumps({'data':item.id})}}"><div style="justify-content: center;" class="actions">
+                    <div style="height:26px;color:azure;min-width:100px;width:70px;font-size:13px" class="order-cont">Order Live!</div></div></a></div><br>
+                <div class="item-description widther">{{item.item_description}}</div><br>
+                <div class="widther ingred" style="">Ingredients:</div>
+                <div class="item-ingridients widther">{{item.item_ingredients}}</div>
+                <div style="width:auto" class="actions">
+                    <object type="image/svg+xml" data="static/icons/heart-icon.svg" class="heart-icon"></object><div class="likes-no" style="">300</div>  
+                </div>
+                <div style="display:flex;gap:5px">
+                    {% if current_user.is_authenticated and current_user.id == item.cid %}
+                        <a class="edit_btn" href="/menu_item_edit?mid={{ser.dumps({'data':item.id})}}">Edit</a>
+                        <a class="edit_btn svg-hrefs" href="/menu_item_edit?mid={{ser.dumps({'data':item.id})}}"><object style="height:18px" type="image/svg+xml" data="static/icons/delete-icon.svg" ></object></a>
+                    {% endif %}
+                </div>
+            </div>
+        </section><br><br><div class="space-filler"></div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+
+<div id="image-viewer">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="full-image">
+</div>
+
+<div class="space-filler"></div>
+
+
+<script>
+    var cont = document.getElementById("dynamic-after");
+
+    cont.style.setProperty('--after-content','"(updated)"');
+
+</script>
+{% endblock %}
